@@ -43,24 +43,12 @@ print("Training completed!")
 
 # Save the train and test losses and accuracies for future reference
 print("Saving training and testing metrics...")
-save_train_test_metrics = {
-    'train_losses': train_losses,
-    'train_accuracies': train_accuracies,
-    'test_losses': test_losses,
-    'test_accuracies': test_accuracies,
-    'model_name': 'CNN_Model_1'
-}
+save_train_test_metrics(train_losses, train_accuracies, test_losses, test_accuracies, 'CNN_Model_1')
 print("Metrics saved successfully.")
 
 # Save plot metrics for visualization
 print("Saving plot metrics...")
-save_plot_metrics = {
-    'train_losses': train_losses,
-    'train_accuracies': train_accuracies,
-    'test_losses': test_losses,
-    'test_accuracies': test_accuracies,
-    'model_name': 'CNN_Model_1'
-}
+save_plot_metrics(train_losses, train_accuracies, test_losses, test_accuracies, 'CNN_Model_1')
 print("Plot metrics saved successfully.")
 
 # Print final statistics
