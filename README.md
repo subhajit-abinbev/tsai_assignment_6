@@ -17,8 +17,8 @@ The goal of this assignment is to train 3 models with the following progressive 
 ### Experiment 2 – Introduce Regularization & Optimizations
 **Targets:**
 - Make the model lighter (reduce parameters closer to ~20k)
-- Add Batch Normalization, Dropout, and Image Augmentation to improve generalization
-- Experiment with proper MaxPooling placement and Global Average Pooling to reduce parameters
+- Add Batch Normalization, and Dropoutto improve generalization
+- Experiment with Global Average Pooling to reduce parameters
 - Target: ≥ 99.4% test accuracy within 20 epochs, parameters < 20k
 
 ### Experiment 3 – Final Optimized Model
@@ -26,7 +26,7 @@ The goal of this assignment is to train 3 models with the following progressive 
 - Achieve the required benchmark: ≥ 99.4% test accuracy consistently in the last few epochs
 - Train within ≤ 15 epochs
 - Keep total parameters ≤ 8,000
-- Use best practices: proper skeleton, BN, Dropout, GAP, data augmentation, lighter architecture, and tuned learning rate schedule
+- Use best practices: proper skeleton, BN, Dropout, proper MaxPooling placement, GAP, data augmentation, lighter architecture, and tuned learning rate schedule
 - Ensure reproducibility of results
 
 ---
@@ -91,7 +91,7 @@ Epoch [20/20] - Train Loss: 0.0063, Train Acc: 99.78% - Test Loss: 0.0296, Test 
 
 **Criticism:** Clear overfitting observed with training accuracy (99.78%) substantially higher than test accuracy (99.26%), indicating the model memorizes training data rather than generalizing effectively to unseen examples.
 
-**Improvement for Experiment 2:** Implement regularization techniques (Batch Normalization, Dropout) and reduce parameters to ~20k while adding data augmentation to bridge the train-test gap and achieve the 99.4% target more efficiently.
+**Improvement for Experiment 2:** Implement regularization techniques (Batch Normalization, Dropout) and reduce parameters to ~20k by adding GAP bridge the train-test gap and achieve the 99.4% target more efficiently.
 
 ---
 
