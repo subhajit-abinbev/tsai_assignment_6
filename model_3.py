@@ -70,22 +70,11 @@ class CNN_Model_3(nn.Module):
 
         self.conv6 = nn.Conv2d(15, 16, 3, padding=1, bias=False)    
         self.bn6 = nn.BatchNorm2d(16)                               
-        self.dropout6 = nn.Dropout(0.03)
-
-        # # Transition Block 3
-        # self.pool3 = nn.MaxPool2d(2, 2)
-
-        # # Conv Block 3
-        # self.conv7 = nn.Conv2d(16, 16, 3, padding=1, bias=False)    
-        # self.bn7 = nn.BatchNorm2d(16)                               
-        # self.dropout7 = nn.Dropout(0.03)                            
-        # self.conv8 = nn.Conv2d(16, 16, 3, padding=0, bias=False)    
-        # self.bn8 = nn.BatchNorm2d(16)                               
-        # self.dropout8 = nn.Dropout(0.03)                                                       
+        self.dropout6 = nn.Dropout(0.03)                                                     
 
         # Output Block
         self.gap = nn.AdaptiveAvgPool2d((1, 1))                     
-        self.conv9 = nn.Conv2d(16, 10, 1, padding=0, bias=False)    
+        self.conv7 = nn.Conv2d(16, 10, 1, padding=0, bias=False)    
 
     def forward(self, x):
         
@@ -127,23 +116,9 @@ class CNN_Model_3(nn.Module):
         x = F.relu(x)
         x = self.dropout6(x)
 
-        # # Transition Block 3
-        # x = self.pool3(x)
-
-        # # Conv Block 3
-        # x = self.conv7(x)
-        # x = self.bn7(x)
-        # x = F.relu(x)
-        # x = self.dropout7(x)
-
-        # x = self.conv8(x)
-        # x = self.bn8(x)
-        # x = F.relu(x)
-        # x = self.dropout8(x)
-
         # Output Block
         x = self.gap(x) 
-        x = self.conv9(x)
+        x = self.conv7(x)
 
         x = x.view(-1, 10*1*1)
         return x

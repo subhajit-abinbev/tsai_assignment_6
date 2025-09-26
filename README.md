@@ -6,7 +6,7 @@ This repository contains three progressive experiments to build and optimize CNN
 
 The goal of this assignment is to train 3 models with the following progressive targets:
 
-### Experiment 1 – Basic Model Setup ✅
+### Experiment 1 – Basic Model Setup
 **Targets:**
 - Build a working CNN skeleton using convolution, pooling, and fully connected layers
 - Ensure the model trains without errors
@@ -28,6 +28,38 @@ The goal of this assignment is to train 3 models with the following progressive 
 - Keep total parameters ≤ 8,000
 - Use best practices: proper skeleton, BN, Dropout, proper MaxPooling placement, GAP, data augmentation, lighter architecture, and tuned learning rate schedule
 - Ensure reproducibility of results
+
+---
+
+## Experiments Summary & Comparison
+
+| **Metric** | **Experiment 1** | **Experiment 2** | **Experiment 3** |
+|------------|------------------|------------------|------------------|
+| **Model Name** | CNN_Model_1 | CNN_Model_2 | CNN_Model_3 |
+| **Parameters** | 88,584 | 26,756 | 7,825 |
+| **Parameter Target** | <100k ✅ | <30k ✅ | ≤8k ✅ |
+| **Best Test Accuracy** | 99.31% | 99.44% | 99.47% |
+| **Accuracy Target** | ≥98.4% ✅ | ≥99.4% ✅ | ≥99.4% ✅ |
+| **Training Epochs** | 20 | 20 | 15 |
+| **Epoch Target** | ≤20 ✅ | ≤20 ✅ | ≤15 ✅ |
+| **Consistency (≥99.4%)** | 0 epochs | 1 epoch | 5 epochs ⭐ |
+| **Final Test Accuracy** | 99.26% | 99.41% | 99.45% |
+| **Optimizer** | SGD | SGD | AdamW |
+| **Learning Rate** | 0.001 | 0.01 | 0.01 |
+| **Data Augmentation** | None | None | RandomRotation, RandomAffine, RandomPerspective |
+| **Scheduler** | None | None | StepLR ✅ |
+| **Regularization** | Basic | BatchNorm + Dropout | BatchNorm + Dropout + Advanced |
+| **Architecture Features** | Basic CNN | BN + Dropout + GAP | Optimized + BN + Dropout + GAP |
+| **Training Loss** | 0.0063 | 0.0169 | 0.0293 |
+| **Test Loss** | 0.0296 | 0.0235 | 0.0181 |
+| **Overfitting Gap** | High (0.52%) | Low (0.30%) | Minimal (-0.39%) |
+| **Parameter Efficiency** | Low | Medium | High ✅ |
+
+### Key Insights:
+- **Progressive Improvement**: Each experiment shows better parameter efficiency while maintaining/improving accuracy
+- **Consistency Achievement**: Only Experiment 3 consistently maintains ≥99.4% accuracy in final epochs
+- **Generalization**: Experiment 3 shows the best generalization with negative overfitting gap (test > train)
+- **Efficiency**: 91% parameter reduction from Experiment 1 to 3 while achieving better performance
 
 ---
 
@@ -261,6 +293,5 @@ python train.py
 - `model_3.py`: CNN_Model_3 optimized architecture for Experiment 3 with data augmentation and scheduler
 - `utils.py`: Utility functions for data loading, training, and evaluation
 - `train.py`: Main training script
-- `training_notebook.ipynb`: Jupyter notebook for experimentation
 - `data/`: MNIST dataset storage
 - `output/`: Training outputs and saved models
