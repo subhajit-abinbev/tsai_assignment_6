@@ -7,6 +7,14 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+import torch.optim as optim
+
+# Optimizer configuration for CNN_Model_1
+def get_optimizer():
+    return optim.Adam  # Return the actual optimizer class
+
+def get_optimizer_params():
+    return {'lr': 0.001}
 
 class CNN_Model_1(nn.Module):
     def __init__(self):

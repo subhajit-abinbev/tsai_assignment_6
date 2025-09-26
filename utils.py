@@ -19,7 +19,7 @@ def compute_mean_std():
     
     return train_mean, train_std
 
-def data_loader(train_mean, train_std, batch_size_train=128, batch_size_test=1024):
+def data_loader(train_mean, train_std, batch_size_train=256, batch_size_test=1024):
     # Transform: convert to tensor + normalize
     transform = transforms.Compose([
         transforms.ToTensor(),
@@ -27,8 +27,8 @@ def data_loader(train_mean, train_std, batch_size_train=128, batch_size_test=102
     ])
     trainset = datasets.MNIST(root='./data', train=True, download=True, transform=transform)
     testset = datasets.MNIST(root='./data', train=False, download=True, transform=transform)
-    trainloader = torch.utils.data.DataLoader(trainset, batch_size=128, shuffle=True)
-    testloader = torch.utils.data.DataLoader(testset, batch_size=2000, shuffle=False)
+    trainloader = torch.utils.data.DataLoader(trainset, batch_size=batch_size_train, shuffle=True)
+    testloader = torch.utils.data.DataLoader(testset, batch_size=batch_size_test, shuffle=False)
     return trainloader, testloader
 
 def evaluate_model(model, device, dataloader, criterion):
@@ -108,15 +108,12 @@ def train_model(model, device, trainloader, testloader, optimizer, criterion, ep
     
     return train_losses, train_accuracies, test_losses, test_accuracies
 
-def initialize_model(cnn_model, optimizer='SGD', lr=0.001):
+def initialize_model(cnn_model, optimizer_func, **optimizer_params):
     # Initialize model, loss function, optimizer
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model = cnn_model().to(device)
     criterion = nn.CrossEntropyLoss()
-    if optimizer == 'SGD':
-        optimizer = optim.SGD(model.parameters(), lr=lr)
-    else:
-        optimizer = optim.Adam(model.parameters(), lr=lr)
+    optimizer = optimizer_func(model.parameters(), **optimizer_params)
     return model, criterion, optimizer, device
 
 def plot_metrics(train_losses, train_accuracies, test_losses, test_accuracies):
