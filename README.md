@@ -153,7 +153,7 @@ Epoch [20/20] - Train Loss: 0.0169, Train Acc: 99.71% - Test Loss: 0.0235, Test 
 ```
 
 ### Results Summary
-- **Total Parameters:** 26,756 (✅ Target: <30k - **Need optimization**)
+- **Total Parameters:** 26,756 (✅ Target: <30k)
 - **Best Training Accuracy:** 99.71% (Epoch 20)
 - **Best Test Accuracy:** 99.44% (Epoch 19) (✅ Target: ≥99.4%)
 - **Final Test Accuracy:** 99.41%
@@ -161,11 +161,11 @@ Epoch [20/20] - Train Loss: 0.0169, Train Acc: 99.71% - Test Loss: 0.0235, Test 
 
 ### Analysis
 
-**Achievement:** The model successfully achieved the 99.4% test accuracy target (99.44% best, 99.41% final) with effective regularization through Batch Normalization and Dropout, demonstrating excellent generalization with minimal overfitting gap.
+**Achievement:** The model successfully achieved both key targets: 99.4% test accuracy (99.44% best, 99.41% final) and parameter count under 30k (26,756 parameters). Effective regularization through Batch Normalization and Dropout demonstrates excellent generalization with minimal overfitting gap.
 
-**Criticism:** Parameter count at 26,756 significantly exceeds the 30k target, requiring further optimization through architectural improvements and more efficient layer designs to meet the parameter constraint.
+**Criticism:** While meeting the current targets, there's still room for parameter efficiency improvements and the model could benefit from more aggressive regularization techniques to further reduce the train-test accuracy gap.
 
-**Improvement for Experiment 3:** Reduce parameters through more efficient architecture design, implement advanced regularization techniques, add data augmentation, and optimize learning rate schedule to achieve ≥99.4% accuracy consistently within 15 epochs and ≤8k parameters.
+**Improvement for Experiment 3:** Further optimize architecture for maximum parameter efficiency, implement advanced regularization techniques, add data augmentation, and optimize learning rate schedule to achieve ≥99.4% accuracy consistently within 15 epochs and ≤8k parameters.
 
 ---
 
