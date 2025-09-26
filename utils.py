@@ -19,14 +19,24 @@ def compute_mean_std():
     
     return train_mean, train_std
 
-def data_loader(train_mean, train_std, batch_size_train=256, batch_size_test=1024):
-    # Transform: convert to tensor + normalize
-    transform = transforms.Compose([
+def data_loader(train_mean, train_std, batch_size_train=128, batch_size_test=1024, train_transform=None):
+    # Base transform: convert to tensor + normalize
+    base_transform = [
         transforms.ToTensor(),
         transforms.Normalize((train_mean,), (train_std,))  # mean and standard deviation as calculated above
-    ])
-    trainset = datasets.MNIST(root='./data', train=True, download=True, transform=transform)
-    testset = datasets.MNIST(root='./data', train=False, download=True, transform=transform)
+    ]   
+    
+    # Training transform with optional additional transforms
+    if train_transform is not None:
+        train_transform_list = [train_transform] + base_transform
+    else:
+        train_transform_list = base_transform
+    
+    train_transform_compose = transforms.Compose(train_transform_list)
+    test_transform_compose = transforms.Compose(base_transform)  # Test set always uses base transform only
+    
+    trainset = datasets.MNIST(root='./data', train=True, download=True, transform=train_transform_compose)
+    testset = datasets.MNIST(root='./data', train=False, download=True, transform=test_transform_compose)
     trainloader = torch.utils.data.DataLoader(trainset, batch_size=batch_size_train, shuffle=True)
     testloader = torch.utils.data.DataLoader(testset, batch_size=batch_size_test, shuffle=False)
     return trainloader, testloader
@@ -56,7 +66,7 @@ def evaluate_model(model, device, dataloader, criterion):
     
     return avg_loss, accuracy
 
-def train_model(model, device, trainloader, testloader, optimizer, criterion, epochs=20):
+def train_model(model, device, trainloader, testloader, optimizer, criterion, epochs=20, scheduler=None):
     """
     Train the model for specified epochs and track training/test metrics.
     """
@@ -105,6 +115,10 @@ def train_model(model, device, trainloader, testloader, optimizer, criterion, ep
         print(f'Epoch [{epoch+1}/{epochs}] - '
             f'Train Loss: {train_loss:.4f}, Train Acc: {train_accuracy:.2f}% - '
             f'Test Loss: {test_loss:.4f}, Test Acc: {test_accuracy:.2f}%')
+        
+        # Update scheduler if provided
+        if scheduler is not None:
+            scheduler.step()
     
     return train_losses, train_accuracies, test_losses, test_accuracies
 
